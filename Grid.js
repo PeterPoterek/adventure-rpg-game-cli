@@ -3,7 +3,7 @@ class Grid {
     this.width = width;
     this.height = height;
 
-    const grid = [];
+    this.grid = [];
 
     for (let col = 0; col < height; col++) {
       const currRow = [];
@@ -13,13 +13,25 @@ class Grid {
         random === 0 ? currRow.push("🌳") : currRow.push("🌲");
       }
 
-      grid.push(currRow);
+      this.grid.push(currRow);
     }
 
-    grid[0][grid[0].length - 1] = "🌀"; //end of the level
-    grid[grid.length - 1][0] = "🧙"; //player starting position
-    console.log(grid);
+    this.grid[0][this.grid[0].length - 1] = "🌀"; //end of the level
+    this.grid[this.grid.length - 1][0] = "🧙"; //player starting position
+
+    this.displayGrid();
+  }
+
+  displayGrid() {
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        process.stdout.write(this.grid[row][col]);
+        process.stdout.write("    ");
+      }
+
+      process.stdout.write("\n");
+    }
   }
 }
 
-const grid = new Grid(5, 5);
+const grid = new Grid(6, 10);
