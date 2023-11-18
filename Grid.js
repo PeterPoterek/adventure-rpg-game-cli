@@ -1,3 +1,5 @@
+import { GridObject } from "./GridObject.js";
+
 class Grid {
   constructor(width, height) {
     this.width = width;
