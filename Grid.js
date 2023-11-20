@@ -48,20 +48,19 @@ class Grid {
     }
 
     //handle moving player
-    let currentPlayerPos = this.grid[this.playerPosY][this.playerPosX];
+    this.grid[this.playerPosY][this.playerPosX] = new GridObject("👣", "footprints");
 
-    currentPlayerPos = new GridObject("👣", "footprints");
     this.playerPosX += 1;
 
     // check if we discovered tile already
-    if (currentPlayerPos.type === "footprints") {
-      currentPlayerPos = new GridObject("🧙", "player");
+    if (this.grid[this.playerPosY][this.playerPosX].type === "footprints") {
+      this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
       return;
     }
 
     // handle discovering a tile
 
-    currentPlayerPos = new GridObject("🧙", "player");
+    this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
 
     console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
   }
@@ -70,3 +69,8 @@ class Grid {
 const grid = new Grid(5, 5);
 
 grid.movePlayerRight();
+grid.movePlayerRight();
+grid.movePlayerRight();
+grid.movePlayerRight();
+grid.movePlayerRight();
+grid.displayGrid();
