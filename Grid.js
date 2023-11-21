@@ -62,11 +62,11 @@ class Grid {
 
     console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
   }
-  movePlayerLeft() {
+  movePlayerUp() {
     //edge of the map check
 
-    console.log();
-    if (this.playerPosX === 0) {
+    console.log(this.height - 1);
+    if (this.playerPosY === 0) {
       console.log("Can't go there");
       return;
     }
@@ -74,7 +74,7 @@ class Grid {
     //handle moving player
     this.grid[this.playerPosY][this.playerPosX] = new GridObject("👣", "footprints");
 
-    this.playerPosX -= 1;
+    this.playerPosY -= 1;
 
     // check if we discovered tile already
     if (this.grid[this.playerPosY][this.playerPosX].type === "footprints") {
@@ -93,8 +93,9 @@ class Grid {
 const grid = new Grid(5, 5);
 
 grid.displayGrid();
+grid.movePlayerUp();
 grid.movePlayerRight();
 grid.movePlayerRight();
-grid.movePlayerLeft();
+grid.movePlayerUp();
 
 grid.displayGrid();
