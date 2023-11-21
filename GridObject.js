@@ -20,7 +20,7 @@ class GridObject {
     } else if (random < 0.66) {
       console.log("There is nothing here.");
     } else {
-      console.log("You already been here.");
+      console.log("You explore an open field.");
     }
   }
 }
