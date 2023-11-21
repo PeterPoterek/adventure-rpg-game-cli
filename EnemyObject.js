@@ -1,6 +1,6 @@
 import { GridObject } from "./GridObject.js";
 
-class ItemObject extends GridObject {
+class EnemyObject extends GridObject {
   #stats = {
     name: null,
     attack: 0,
@@ -10,15 +10,15 @@ class ItemObject extends GridObject {
   constructor(icon, stats) {
     super(icon);
 
-    this.type = "item";
+    this.type = "enemy";
     this.#stats = stats;
   }
 
-  getItemName() {
+  getEnemyName() {
     return this.#stats.name;
   }
 
-  getStats() {
+  getEnemyStats() {
     return {
       attack: this.#stats.attack,
       defense: this.#stats.defense,
@@ -28,9 +28,9 @@ class ItemObject extends GridObject {
 
   describe() {
     const stats = this.#stats;
-    console.log(`You found a ${stats.name}${stats.icon}`);
-    console.log(`${stats.name}'s stats: ATK:${stats.attack} DEF:${stats.defense} HP:${stats.hp}`);
+    console.log(`You encountered a ${stats.name}${this.icon}!`);
+    console.log(`${stats.name} Stats: ATK:${stats.attack} DEF:${stats.defense} HP:${stats.hp}`);
   }
 }
 
-export { ItemObject };
+export { EnemyObject };
