@@ -88,6 +88,32 @@ class Grid {
 
     console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
   }
+  movePlayerDown() {
+    //edge of the map check
+
+    console.log();
+    if (this.playerPosY === this.height - 1) {
+      console.log("Can't go there");
+      return;
+    }
+
+    //handle moving player
+    this.grid[this.playerPosY][this.playerPosX] = new GridObject("👣", "footprints");
+
+    this.playerPosY += 1;
+
+    // check if we discovered tile already
+    if (this.grid[this.playerPosY][this.playerPosX].type === "footprints") {
+      this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
+      return;
+    }
+
+    // handle discovering a tile
+
+    this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
+
+    console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
+  }
 }
 
 const grid = new Grid(5, 5);
@@ -97,5 +123,8 @@ grid.movePlayerUp();
 grid.movePlayerRight();
 grid.movePlayerRight();
 grid.movePlayerUp();
+grid.movePlayerDown();
+grid.movePlayerDown();
+grid.movePlayerDown();
 
 grid.displayGrid();
