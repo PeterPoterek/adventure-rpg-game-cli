@@ -23,8 +23,6 @@ class Grid {
 
     this.grid[0][width - 1] = new GridObject("🌀", "exitPortal"); //end of the level
     this.grid[height - 1][0] = new GridObject("🧙", "Player"); //player starting position
-
-    console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
   }
 
   // refactor needed
@@ -53,6 +51,7 @@ class Grid {
 
     // check if we discovered tile already
     if (this.grid[this.playerPosY][this.playerPosX].type === "footprints") {
+      this.grid[this.playerPosY][this.playerPosX].describe();
       this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
       return;
     }
@@ -60,14 +59,34 @@ class Grid {
     // handle discovering a tile
 
     this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
+  }
+  movePlayerLeft() {
+    //edge of the map check
+    if (this.playerPosX === 0) {
+      console.log("Can't go there");
+      return;
+    }
 
-    console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
+    //handle moving player
+    this.grid[this.playerPosY][this.playerPosX] = new GridObject("👣", "footprints");
+
+    this.playerPosX -= 1;
+
+    // check if we discovered tile already
+    if (this.grid[this.playerPosY][this.playerPosX].type === "footprints") {
+      this.grid[this.playerPosY][this.playerPosX].describe();
+      this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
+      return;
+    }
+
+    // handle discovering a tile
+
+    this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
   }
 
   movePlayerUp() {
     //edge of the map check
 
-    console.log(this.height - 1);
     if (this.playerPosY === 0) {
       console.log("Can't go there");
       return;
@@ -80,6 +99,7 @@ class Grid {
 
     // check if we discovered tile already
     if (this.grid[this.playerPosY][this.playerPosX].type === "footprints") {
+      this.grid[this.playerPosY][this.playerPosX].describe();
       this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
       return;
     }
@@ -87,14 +107,11 @@ class Grid {
     // handle discovering a tile
 
     this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
-
-    console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
   }
 
   movePlayerDown() {
     //edge of the map check
 
-    console.log();
     if (this.playerPosY === this.height - 1) {
       console.log("Can't go there");
       return;
@@ -107,6 +124,7 @@ class Grid {
 
     // check if we discovered tile already
     if (this.grid[this.playerPosY][this.playerPosX].type === "footprints") {
+      this.grid[this.playerPosY][this.playerPosX].describe();
       this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
       return;
     }
@@ -114,21 +132,30 @@ class Grid {
     // handle discovering a tile
 
     this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
-
-    console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
   }
 }
 
 const grid = new Grid(10, 10);
 
 grid.displayGrid();
+console.log();
 
-// grid.movePlayerUp();
-// grid.movePlayerRight();
-// grid.movePlayerRight();
-// grid.movePlayerUp();
-// grid.movePlayerDown();
-// grid.movePlayerDown();
-// grid.movePlayerDown();
+grid.movePlayerRight();
+grid.movePlayerRight();
+grid.movePlayerRight();
+grid.movePlayerRight();
+grid.movePlayerRight();
+grid.movePlayerRight();
+grid.movePlayerRight();
+grid.movePlayerRight();
 
-// grid.displayGrid();
+grid.movePlayerLeft();
+grid.movePlayerLeft();
+grid.movePlayerLeft();
+grid.movePlayerLeft();
+grid.movePlayerLeft();
+grid.movePlayerLeft();
+grid.movePlayerLeft();
+grid.movePlayerLeft();
+grid.movePlayerLeft();
+grid.displayGrid();
