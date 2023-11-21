@@ -1,18 +1,17 @@
 class Player {
   #stats = {
-    name: null,
     attack: 0,
     defense: 0,
     hp: 0,
   };
 
-  constructor(icon, stats) {
-    this.icon = icon;
+  constructor(name, stats) {
+    this.name = name;
     this.#stats = stats;
   }
 
   getPlayerName() {
-    return this.#stats.name;
+    return this.name;
   }
 
   getPlayerStats() {
@@ -36,7 +35,7 @@ class Player {
   }
   describe() {
     const stats = this.#stats;
-    console.log(`${stats.name}'s stats are ATK:${stats.attack} DEF:${stats.defense} HP:${stats.hp}`);
+    console.log(`${this.name}'s stats are ATK:${stats.attack} DEF:${stats.defense} HP:${stats.hp}`);
   }
 }
 

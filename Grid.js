@@ -12,6 +12,7 @@ class Grid {
 
     this.playerPosX = playerStartPosX;
     this.playerPosY = playerStartPosY;
+    this.player = new Player("Wizard", { attack: 5, defense: 5, hp: 20 });
 
     this.grid = [];
 
@@ -30,7 +31,6 @@ class Grid {
     this.grid[height - 1][0] = new GridObject("🧙", "Player"); //player starting position
   }
 
-  // refactor needed
   displayGrid() {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
@@ -60,6 +60,64 @@ class Grid {
     }
   }
 
+  handleTurn() {
+    if (this.grid[this.playerPosY][this.playerPosX].type === "exitPortal") {
+      console.log(`You reached the end of the level🎉`);
+      process.exit();
+    }
+
+    if (this.#currentObject.type === "footprints") {
+      this.#currentObject.describe();
+      return;
+    }
+
+    if (this.#currentObject.type === "item") {
+      this.#currentObject.describe();
+      const stats = this.#currentObject.getStats();
+      this.player.addToStats(stats);
+    }
+
+    if (this.#currentObject.type === "enemy") {
+      this.#currentObject.describe();
+
+      const enemyStats = this.#currentObject.getEnemyStats();
+      const enemyName = this.#currentObject.getEnemyName();
+
+      const playerStats = this.player.getPlayerStats();
+
+      if (enemyStats.defense > playerStats.defense) {
+        console.log(`💀You lose - ${enemyName} was too powerful💀`);
+        process.exit();
+      }
+
+      let totalPlayerDamage = 0;
+
+      while (enemyStats.hp > 0) {
+        const enemyDamageTakenTurn = playerStats.attack - enemyStats.defense;
+        const playerDamageTakenTurn = enemyStats.attack - playerStats.defense;
+
+        if (enemyDamageTakenTurn > 0) {
+          enemyStats.hp -= enemyDamageTakenTurn;
+        }
+
+        if (playerDamageTakenTurn > 0) {
+          playerStats.hp -= playerDamageTakenTurn;
+          totalPlayerDamage += playerDamageTakenTurn;
+        }
+      }
+
+      if (playerStats.hp <= 0) {
+        console.log(`💀You lose - ${enemyName} was too powerful💀`);
+        process.exit();
+      }
+
+      this.player.addToStats({ hp: -totalPlayerDamage });
+      console.log(`You defeated the ${enemyName}`);
+      this.player.describe();
+    }
+  }
+  // refactor needed
+
   movePlayerRight() {
     //edge of the map check
     if (this.playerPosX === this.width - 1) {
@@ -81,7 +139,7 @@ class Grid {
 
     // handle discovering a tile
     this.#currentObject = this.generateGridObject();
-    this.#currentObject.describe();
+    this.handleTurn();
     this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
   }
   movePlayerLeft() {
@@ -105,7 +163,7 @@ class Grid {
 
     // handle discovering a tile
     this.#currentObject = this.generateGridObject();
-    this.#currentObject.describe();
+    this.handleTurn();
     this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
   }
 
@@ -131,7 +189,7 @@ class Grid {
 
     // handle discovering a tile
     this.#currentObject = this.generateGridObject();
-    this.#currentObject.describe();
+    this.handleTurn();
     this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
   }
 
@@ -157,21 +215,21 @@ class Grid {
 
     // handle discovering a tile
     this.#currentObject = this.generateGridObject();
-    this.#currentObject.describe();
+    this.handleTurn();
     this.grid[this.playerPosY][this.playerPosX] = new GridObject("🧙", "player");
   }
 }
 
-const grid = new Grid(10, 10);
+const grid = new Grid(5, 5);
 
 grid.displayGrid();
 console.log();
 grid.movePlayerRight();
+grid.movePlayerUp();
+grid.movePlayerUp();
+grid.movePlayerUp();
 grid.movePlayerRight();
 grid.movePlayerRight();
-grid.movePlayerUp();
-grid.movePlayerUp();
-grid.movePlayerUp();
-grid.movePlayerUp();
-grid.movePlayerUp();
+grid.movePlayerRight();
+
 grid.displayGrid();
