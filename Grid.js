@@ -21,12 +21,13 @@ class Grid {
       this.grid.push(currRow);
     }
 
-    this.grid[0][height - 1] = new GridObject("🌀", "exitPortal"); //end of the level
-    this.grid[width - 1][0] = new GridObject("🧙", "Player"); //player starting position
+    this.grid[0][width - 1] = new GridObject("🌀", "exitPortal"); //end of the level
+    this.grid[height - 1][0] = new GridObject("🧙", "Player"); //player starting position
 
     console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
   }
 
+  // refactor needed
   displayGrid() {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
@@ -62,6 +63,7 @@ class Grid {
 
     console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
   }
+
   movePlayerUp() {
     //edge of the map check
 
@@ -88,6 +90,7 @@ class Grid {
 
     console.log(`Player current position is: ${this.playerPosX}X ${this.playerPosY}Y`);
   }
+
   movePlayerDown() {
     //edge of the map check
 
@@ -116,15 +119,16 @@ class Grid {
   }
 }
 
-const grid = new Grid(5, 5);
+const grid = new Grid(10, 10);
 
 grid.displayGrid();
-grid.movePlayerUp();
-grid.movePlayerRight();
-grid.movePlayerRight();
-grid.movePlayerUp();
-grid.movePlayerDown();
-grid.movePlayerDown();
-grid.movePlayerDown();
 
-grid.displayGrid();
+// grid.movePlayerUp();
+// grid.movePlayerRight();
+// grid.movePlayerRight();
+// grid.movePlayerUp();
+// grid.movePlayerDown();
+// grid.movePlayerDown();
+// grid.movePlayerDown();
+
+// grid.displayGrid();
