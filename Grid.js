@@ -2,6 +2,7 @@ import { GridObject } from "./GridObject.js";
 import { ItemObject } from "./ItemObject.js";
 import { EnemyObject } from "./EnemyObject.js";
 import { Player } from "./Player.js";
+import { getUserDirection } from "./PlayerInput.js";
 
 class Grid {
   #currentObject;
@@ -29,8 +30,38 @@ class Grid {
 
     this.grid[0][width - 1] = new GridObject("🌀", "exitPortal"); //end of the level
     this.grid[height - 1][0] = new GridObject("🧙", "Player"); //player starting position
+
+    this.startGame();
   }
 
+  async startGame() {
+    while (this.player.getPlayerStats().hp > 0) {
+      this.displayGrid();
+
+      const response = await getUserDirection();
+
+      switch (response) {
+        case "Up": {
+          this.movePlayerUp();
+          break;
+        }
+        case "Down": {
+          this.movePlayerDown();
+          break;
+        }
+        case "Left": {
+          this.movePlayerLeft();
+          break;
+        }
+        case "Right": {
+          this.movePlayerRight();
+          break;
+        }
+      }
+
+      console.log("------------------------------------------");
+    }
+  }
   displayGrid() {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
@@ -220,16 +251,4 @@ class Grid {
   }
 }
 
-const grid = new Grid(5, 5);
-
-grid.displayGrid();
-console.log();
-grid.movePlayerRight();
-grid.movePlayerUp();
-grid.movePlayerUp();
-grid.movePlayerUp();
-grid.movePlayerRight();
-grid.movePlayerRight();
-grid.movePlayerRight();
-
-grid.displayGrid();
+new Grid(10, 10);

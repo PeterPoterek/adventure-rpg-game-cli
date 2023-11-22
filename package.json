@@ -9,8 +9,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "inquirer": "^9.2.12"
-  },
-  "type": "module"
+  }
 }
